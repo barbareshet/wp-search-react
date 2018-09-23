@@ -1,23 +1,10 @@
-# Windows thumbnail cache files
-Thumbs.db
-ehthumbs.db
-ehthumbs_vista.db
+# Created by .ignore support plugin (hsz.mobi)
+### Example user template template
+### Example user template
 
-# Folder config file
-Desktop.ini
-
-# Recycle Bin used on file shares
-$RECYCLE.BIN/
-
-# Windows Installer files
-*.cab
-*.msi
-*.msm
-*.msp
-
-# Windows shortcuts
-*.lnk
-
-# =========================
-# Operating System Files
-# =========================
+# IntelliJ project files
+.idea
+*.iml
+out
+gen
+node_modules
