@@ -24,3 +24,4 @@ function wp_react_rest_api_scripts() {
 		'rest_search_posts' => rest_url( 'wp/v2/posts?search=%s' )));
 }
 add_action( 'wp_enqueue_scripts', 'wp_react_rest_api_scripts' );
+
