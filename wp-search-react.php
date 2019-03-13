@@ -3,7 +3,7 @@
 Plugin Name: wp-search-react
 Plugin URI: http://localhost/wp-react/
 Description: activate react search on wp sites
-Version: 0.1.0
+Version: 1.0.0
 Author: Ido Barnea
 Author URI: https://www.barbareshet.com
 Text Domain: wprs
