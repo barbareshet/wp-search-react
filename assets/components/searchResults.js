@@ -14,7 +14,7 @@ export default class SearchResults extends React.Component{
             const _results = this.props.results.map( result => {
                 return <SearchResult ley={result.id} result={result}/>
             });
-            results = <ul>{ _results }</ul>
+            results = <ul className="list-unstyled">{ _results }</ul>
         } else if( this.props.searched ) {
             // Results loaded, but none found.
             results = <p>Nothing Found</p>;
