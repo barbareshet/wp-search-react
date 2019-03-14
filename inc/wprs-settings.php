@@ -57,11 +57,12 @@ if (! class_exists('WPRS_Setting')){
 			$post_types_args = array(
 				'public'   => true,
 				'publicly_queryable' => true,
-				'exclude_from_search'   => false
+				'_builtin' => false
 			);
-			$output = 'names'; // names or objects, note names is the default
+			$output = 'objects'; // names or objects, note names is the default
 			$operator = 'and'; // 'and' or 'or'
 			$post_types = get_post_types( $post_types_args, $output, $operator );
+
 			ob_start();?>
 
 			<div class="wrap">
@@ -71,20 +72,32 @@ if (! class_exists('WPRS_Setting')){
 				</p>
 				<form action="options.php" method="post">
 
-					<?php settings_fields('wprs_settings_group') ;?>
+					<?php   settings_fields('wprs_settings_group');
+                            do_settings_sections( 'wprs_settings_group' );?>
 					<table class="form-table">
 						<tbody>
 
 						<tr>
 							<th>
-								<label for="wprs_settings[wprs_post_types]">
-									<?php _e('Select Post Type', 'wprs');?>
-								</label>
-							</th>
+
+								    <?php _e('Select Additional Post Type', 'wprs');;?>
+
+                            </th>
 							<td>
-								<?php foreach ( $post_types  as $post_type ) { ?>
-									<input type="checkbox" name="wprs_settings[wprs_post_types]" value="1" <?php checked( $wprs_options['wprs_post_types'], 1 ); ?> /><?php echo $post_type;?><br/>
-								<?php } ?>
+								<?php $i = 1;
+								foreach ( $post_types  as $post_type ) {
+
+									$checked = ( $wprs_options['wprs_post_types'][$i] == 1 )? ' checked="checked" ' : ' ';
+                                    echo '<label>';
+                                   		echo '<input type="checkbox" name="wprs_settings[wprs_post_types]['.$i.']" value="1" '.$checked.'>'.ucfirst($post_type->label).'<br>';
+                                    echo '</label>';
+									?>
+
+
+
+								<?php
+								    $i++;
+								} ?>
 								<p class="description">
 									<?php _e('Choose post type to search in', 'wprs');?>
 								</p>
@@ -94,7 +107,7 @@ if (! class_exists('WPRS_Setting')){
 						</tbody>
 					</table>
 					<p class="submit">
-						<input type="submit" name="submit" id="submit" class="button button-primary" value="<?php _e('Save Changes', 'wprs') ;?>">
+						<?php submit_button(); ?>
 					</p>
 				</form>
 			</div>
