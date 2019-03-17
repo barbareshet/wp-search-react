@@ -20,17 +20,19 @@ function wprs_load_textdomain() {
 }
 add_action( 'plugins_loaded', 'wprs_load_textdomain' );
 
-/**
- * Enqueueing the script
- */
-function wp_react_rest_api_scripts() {
-	wp_enqueue_script( 'react-rest-js', plugin_dir_url( __FILE__ ) . 'assets/js/public.min.js', array( 'jquery' ), '', true );
-	wp_localize_script( 'react-rest-js', 'wp_react_js', array(
-		// Adding the post search REST URL
-		'rest_search_posts' => rest_url( 'wp/v2/search?search=%s' )));
-}
-add_action( 'wp_enqueue_scripts', 'wp_react_rest_api_scripts' );
 
+function regsiter_api(){
+
+	register_rest_route( 'wprs/v1', '/options', array(
+		'methods' => 'GET',
+		'callback' => 'wprs_get_options',
+	) );
+}
+add_action( 'rest_api_init', 'regsiter_api', 10 );
+
+function wprs_get_options(){
+	return __FILE__;
+}
 //Load Settings only if on the admin side
 
 

@@ -29,6 +29,7 @@ if (! class_exists('WPRS_Setting')){
 			if ( is_admin() ){
 
 				add_action( 'admin_menu', array( &$this, 'wprs_options_menu_link') );
+				add_action( 'wp_enqueue_scripts', array( &$this, 'wp_react_rest_api_scripts') );
 			}
 		}
 
@@ -43,6 +44,15 @@ if (! class_exists('WPRS_Setting')){
 				'wprs-options',
 				array( $this, 'wprs_options_content')
 			);
+		}
+		/**
+		 * Enqueueing the script
+		 */
+		function wp_react_rest_api_scripts() {
+			wp_enqueue_script( 'react-rest-js', plugin_dir_url( __FILE__ ) . 'assets/js/public.min.js', array( 'jquery' ), '', true );
+			wp_localize_script( 'react-rest-js', 'wp_react_js', array(
+				// Adding the post search REST URL
+				'rest_search_posts' => rest_url( 'wp/v2/search?search=%s' )));
 		}
 
 		function wprs_options_content(){
@@ -103,6 +113,19 @@ if (! class_exists('WPRS_Setting')){
 								</p>
 							</td>
 						</tr>
+                        <tr>
+                            <th>
+                                <label for="wprs_settings[wprs_form_class]">
+									<?php _e('Search From Class', 'cts');?>
+                                </label>
+                            </th>
+                            <td>
+                                <input type="text" name="wprs_settings[wprs_form_class]" value="<?php echo $wprs_options['wprs_form_class'] ;?>" id="wprs_settings[wprs_form_class]" class="regular-text half-width" placeholder="search-field"/>
+                                <p class="description">
+									<?php _e('What is the form class', 'cts');?>
+                                </p>
+                            </td>
+                        </tr>
 
 						</tbody>
 					</table>
