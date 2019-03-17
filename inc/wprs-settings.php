@@ -29,8 +29,10 @@ if (! class_exists('WPRS_Setting')){
 			if ( is_admin() ){
 
 				add_action( 'admin_menu', array( &$this, 'wprs_options_menu_link') );
-				add_action( 'wp_enqueue_scripts', array( &$this, 'wp_react_rest_api_scripts') );
+
 			}
+			add_action( 'wp_enqueue_scripts', array( &$this, 'wp_react_rest_api_scripts') );
+			add_action( 'rest_api_init', array( $this, 'wprs_regsiter_api_ep', 10) );
 		}
 
 
@@ -45,6 +47,21 @@ if (! class_exists('WPRS_Setting')){
 				array( $this, 'wprs_options_content')
 			);
 		}
+
+
+		function wprs_regsiter_api_ep(){
+
+			register_rest_route( 'wprs/v1', '/options', array(
+				'methods' => 'GET',
+				'callback' => $this->wprs_get_options(),
+			) );
+		}
+
+
+		function wprs_get_options(){
+			global $wprs_options;
+			return $wprs_options;
+		}
 		/**
 		 * Enqueueing the script
 		 */
@@ -52,7 +69,10 @@ if (! class_exists('WPRS_Setting')){
 			wp_enqueue_script( 'react-rest-js', plugin_dir_url( __FILE__ ) . 'assets/js/public.min.js', array( 'jquery' ), '', true );
 			wp_localize_script( 'react-rest-js', 'wp_react_js', array(
 				// Adding the post search REST URL
-				'rest_search_posts' => rest_url( 'wp/v2/search?search=%s' )));
+				'rest_search_posts' => rest_url( 'wp/v2/search?search=%s' ),
+                'search_form_class'=> $this->wprs_options['wprs_form_class']
+                )
+            );
 		}
 
 		function wprs_options_content(){

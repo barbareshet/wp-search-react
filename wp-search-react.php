@@ -21,18 +21,7 @@ function wprs_load_textdomain() {
 add_action( 'plugins_loaded', 'wprs_load_textdomain' );
 
 
-function regsiter_api(){
 
-	register_rest_route( 'wprs/v1', '/options', array(
-		'methods' => 'GET',
-		'callback' => 'wprs_get_options',
-	) );
-}
-add_action( 'rest_api_init', 'regsiter_api', 10 );
-
-function wprs_get_options(){
-	return __FILE__;
-}
 //Load Settings only if on the admin side
 
 
