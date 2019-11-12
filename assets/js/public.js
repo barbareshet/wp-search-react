@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import SearchForm from '../components/searchForm';
 
 const searchFormElement = <SearchForm />;
-const searchFields = document.getElementsByClassName('search-form');
+const searchFields = document.getElementsByClassName('woocommerce-product-search');
 
 if ( searchFields.length ){
     for ( let i = 0; i < searchFields.length; i++ ){
