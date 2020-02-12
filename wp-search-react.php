@@ -28,9 +28,12 @@ if ( !class_exists('WPRS') ){
 			$this->plugin = plugin_basename( __FILE__ );
 			add_filter( "plugin_action_links_$this->plugin", array( &$this, 'wprs_add_settings_link') );
 		}
+
+
 		public function wprs_load_textdomain() {
 			load_plugin_textdomain( 'wprs', false, basename( dirname( __FILE__ ) ) . '/languages' );
 		}
+
 
 		/**
 		 * Enqueueing the script
@@ -47,7 +50,7 @@ if ( !class_exists('WPRS') ){
 
 
 		public function wprs_register_settings(){
-//
+		//
 			register_setting('wprs_settings_group', 'wprs_settings');
 			require_once ( plugin_dir_path(__FILE__) . '/inc/wprs-settings.php' );
 		}
